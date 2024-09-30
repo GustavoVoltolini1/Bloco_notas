@@ -1,9 +1,12 @@
 <?php
+    include 'db.php';
+
 if (isset($_POST['create'])) {
     $titulo = $_POST['titulo'];
     $categoria = $_POST['categoria'];
     $conteudo = $_POST['conteudo'];
-    $conn->query("INSERT INTO notas (user_id, titulo, categoria, conteudo) VALUES (1, '$titulo', '$categoria', '$conteudo')");
+    $sql = "INSERT INTO notas (user_id, titulo, categoria, conteudo) VALUES (1, '$titulo', '$categoria', '$conteudo')";
+    $conn-> query($sql);
     echo "A nota foi criada";
 }
 ?>
