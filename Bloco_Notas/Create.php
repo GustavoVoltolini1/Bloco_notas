@@ -1,19 +1,26 @@
 <?php
-    include 'db.php';
+include 'db.php';
 
-if (isset($_POST['create'])) {
-    $titulo = $_POST['titulo'];
-    $categoria = $_POST['categoria'];
-    $conteudo = $_POST['conteudo'];
-    $sql = "INSERT INTO notas (user_id, titulo, categoria, conteudo) VALUES (1, '$titulo', '$categoria', '$conteudo')";
-    $conn-> query($sql);
-    echo "A nota foi criada";
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+
+    $sql = "INSERT INTO user (name, email) VALUES ('$name', '$email')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Novo registro criado com sucesso";
+    } else {
+        echo "Erro: " . $sql . "<br>" . $conn->error;
+    }
 }
+
+$conn->close();
 ?>
 
-<form method="POST">
-    Título: <input type="text" name="titulo"><br>
-    Categoria: <input type="text" name="categoria"><br>
-    Conteúdo: <textarea name="conteudo"></textarea><br>
-    <input type="submit" name="create" value="Criar Nota">
+<form method="post" action="create.php">
+    Nome: <input type="text" name="name" required>
+    Email: <input type="email" name="email" required>
+    <input type="submit" value="Adicionar">
 </form>
+
+<a href="read.php">Ver registros.</a>
